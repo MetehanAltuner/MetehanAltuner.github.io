@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Metehan Altuner — Platform &amp; Backend</title>
+<meta name="description" content="Metehan Altuner — DevOps Ekip Lideri, Platform &amp; Backend Mühendisi. Ankara.">
+<meta name="theme-color" content="#DEDCD3">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#DEDCD3;
+  --card:#E6E4DC;
+  --ink:#161B18;
+  --ink-2:#3E4744;
+  --ink-3:#6C7671;
+  --rule:#BFC5C2;
+  --teal:#0E5257;
+  --teal-2:#0A3B3F;
+  --amber:#B0740E;
+  --clear:#2E6B47;
+  --rail:70px;
+  --maxw:740px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Newsreader",Georgia,serif; font-size:17.5px; line-height:1.62;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+body::before{
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.30;
+  background-image:radial-gradient(var(--ink-3) .5px, transparent .5px);
+  background-size:4px 4px;
+}
+.wrap{position:relative; z-index:1; max-width:var(--maxw); margin:0 auto; padding:0 22px 110px}
+h1,h2,h3,h4{font-family:"IBM Plex Sans",Helvetica,Arial,sans-serif}
+.mono,.eyebrow,.tag,.stack,.when,.lbl{font-family:"IBM Plex Mono",ui-monospace,monospace}
+a{color:inherit}
+p{margin:0 0 16px; max-width:64ch}
+:focus-visible{outline:2px solid var(--amber); outline-offset:3px; border-radius:2px}
+
+/* ---------- spine ---------- */
+.spine{position:fixed; left:0; top:0; bottom:0; width:var(--rail); z-index:2; display:none}
+.spine .track{position:absolute; left:34px; top:0; bottom:0; width:1px; background:var(--rule)}
+.spine .sleepers{position:absolute; left:27px; top:0; bottom:0; width:15px; opacity:.30;
+  background-image:linear-gradient(to bottom,var(--ink-3) 1px,transparent 1px); background-size:100% 22px}
+.spine .car{position:absolute; left:29px; width:11px; height:11px; border-radius:50%;
+  background:var(--paper); border:1.5px solid var(--ink); top:0; transition:top .1s linear}
+.spine .car::after{content:""; position:absolute; inset:2.5px; border-radius:50%; background:var(--amber)}
+@media (min-width:1000px){ .spine{display:block} .wrap,.bar-in{margin-left:calc(var(--rail) + 40px)} }
+
+/* ---------- bar ---------- */
+header.bar{position:sticky; top:0; z-index:6;
+  background:color-mix(in srgb,var(--paper) 88%,transparent);
+  backdrop-filter:blur(8px); border-bottom:1px solid color-mix(in srgb,var(--rule) 70%,transparent)}
+.bar-in{max-width:var(--maxw); margin:0 auto; padding:10px 22px; display:flex; align-items:center; justify-content:space-between; gap:14px}
+.sig{font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-2)}
+.bar-right{display:flex; align-items:center; gap:12px}
+.navlinks{display:none; gap:16px}
+@media(min-width:680px){ .navlinks{display:flex} }
+.navlinks a{font-family:"IBM Plex Mono",monospace; font-size:.7rem; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--ink-3); text-decoration:none; transition:color .15s}
+.navlinks a:hover{color:var(--teal)}
+.lang{display:flex; border:1px solid var(--rule); border-radius:2px; overflow:hidden}
+.lang button{font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.1em;
+  background:none; border:0; padding:5px 9px; cursor:pointer; color:var(--ink-3)}
+.lang button[aria-pressed="true"]{background:var(--ink); color:var(--paper)}
+
+/* ---------- hero ---------- */
+.hero{padding:82px 0 60px}
+.place{font-family:"IBM Plex Mono",monospace; font-size:.7rem; letter-spacing:.24em;
+  text-transform:uppercase; color:var(--ink-3); margin-bottom:20px}
+h1{font-size:clamp(2.5rem,8.5vw,4.2rem); line-height:.98;
+  font-weight:700; letter-spacing:-.035em; margin:0}
+.role{font-size:clamp(1rem,3.2vw,1.15rem); font-weight:500; color:var(--teal);
+  letter-spacing:-.005em; margin:16px 0 0; font-family:"IBM Plex Sans",sans-serif}
+.lead{font-size:1.1rem; color:var(--ink-2); margin-top:16px}
+.scaleline{margin-top:26px; padding:11px 0; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);
+  font-family:"IBM Plex Mono",monospace; font-size:.73rem; letter-spacing:.03em; color:var(--ink-2); line-height:2}
+.scaleline b{color:var(--ink); font-weight:500}
+.scaleline .d{color:var(--rule); padding:0 6px}
+.actions{display:flex; flex-wrap:wrap; gap:9px; margin-top:24px}
+.btn{font-family:"IBM Plex Sans",sans-serif; font-size:.82rem; font-weight:500; letter-spacing:.01em;
+  border:1px solid var(--ink); background:none; color:var(--ink); padding:8px 15px; border-radius:2px;
+  cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:7px; transition:.16s}
+.btn:hover{background:var(--ink); color:var(--paper)}
+.btn.primary{background:var(--teal); border-color:var(--teal); color:#F1EFE8}
+.btn.primary:hover{background:var(--teal-2); border-color:var(--teal-2)}
+.status{display:flex; align-items:center; gap:9px; margin-top:22px;
+  font-family:"IBM Plex Mono",monospace; font-size:.71rem; letter-spacing:.09em;
+  text-transform:uppercase; color:var(--ink-2)}
+.lamp{width:8px; height:8px; border-radius:50%; background:var(--clear); flex:none;
+  box-shadow:0 0 0 0 color-mix(in srgb,var(--clear) 55%,transparent); animation:pulse 3s ease-out infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--clear) 50%,transparent)}
+  70%{box-shadow:0 0 0 8px transparent}100%{box-shadow:0 0 0 0 transparent}}
+
+/* ---------- sections ---------- */
+section{padding:52px 0; scroll-margin-top:64px}
+.eyebrow{font-size:.68rem; letter-spacing:.22em; text-transform:uppercase; color:var(--ink-3);
+  display:flex; align-items:center; gap:11px; margin-bottom:24px}
+.eyebrow::after{content:""; flex:1; height:1px; background:var(--rule)}
+h2{font-size:clamp(1.35rem,4.4vw,1.6rem); font-weight:600; letter-spacing:-.018em; margin:0 0 16px; line-height:1.25}
+
+/* ---------- capabilities ---------- */
+.caps{border-top:1px solid var(--rule)}
+.cap{padding:20px 0; border-bottom:1px solid color-mix(in srgb,var(--rule) 65%,transparent);
+  display:grid; grid-template-columns:30px 1fr; gap:14px; align-items:start}
+.cap .n{font-family:"IBM Plex Mono",monospace; font-size:.7rem; color:var(--amber); padding-top:5px}
+.cap h3{font-size:1rem; font-weight:600; margin:0 0 5px; letter-spacing:-.005em}
+.cap p{margin:0; font-size:.99rem; color:var(--ink-2)}
+
+/* ---------- projects ---------- */
+.proj{background:var(--card); border:1px solid var(--rule); border-left:3px solid var(--teal);
+  padding:24px 22px; margin-bottom:18px}
+.proj h3{font-size:clamp(1.08rem,3.6vw,1.22rem); font-weight:600; margin:0 0 7px; letter-spacing:-.012em; line-height:1.3}
+.stack{font-size:.7rem; letter-spacing:.05em; color:var(--ink-3); margin-bottom:15px; line-height:1.8}
+.pblock{margin-bottom:12px}
+.lbl{display:block; font-size:.63rem; letter-spacing:.19em; text-transform:uppercase;
+  color:var(--teal); margin-bottom:3px}
+.pblock p{margin:0; font-size:1rem; color:var(--ink-2)}
+.pblock p b{color:var(--ink); font-weight:500}
+.expander{margin-top:16px; border-top:1px solid var(--rule); padding-top:13px}
+.expander button{font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.11em;
+  text-transform:uppercase; background:none; border:0; padding:0; cursor:pointer; color:var(--teal);
+  display:flex; align-items:center; gap:7px}
+.expander button .chev{transition:transform .2s; display:inline-block; font-size:.8rem}
+.expander[data-open="true"] button .chev{transform:rotate(90deg)}
+.deep{display:none; margin-top:13px}
+.expander[data-open="true"] .deep{display:block}
+.deep ul{margin:0; padding-left:17px}
+.deep li{margin-bottom:8px; font-size:.95rem; color:var(--ink-2)}
+.deep li::marker{color:var(--amber)}
+.deep li b{color:var(--ink); font-weight:500}
+
+/* ---------- route ---------- */
+.stations{position:relative; padding-left:25px}
+.stations::before{content:""; position:absolute; left:4px; top:9px; bottom:9px; width:1px; background:var(--rule)}
+.stop{position:relative; padding-bottom:30px}
+.stop:last-child{padding-bottom:0}
+.stop::before{content:""; position:absolute; left:-25px; top:8px; width:9px; height:9px;
+  border-radius:50%; background:var(--paper); border:1.5px solid var(--ink)}
+.stop.now::before{background:var(--clear); border-color:var(--clear)}
+.when{font-size:.71rem; letter-spacing:.1em; color:var(--ink-3); text-transform:uppercase}
+.stop h3{font-size:1.02rem; font-weight:600; margin:3px 0 1px; letter-spacing:-.008em}
+.where{font-size:.94rem; color:var(--ink-3); font-style:italic; margin-bottom:9px}
+.stop ul{margin:0; padding-left:17px}
+.stop li{margin-bottom:6px; color:var(--ink-2); font-size:.99rem}
+.stop li::marker{color:var(--rule)}
+
+/* ---------- toolkit ---------- */
+.grp{margin-bottom:20px}
+.grp .k{font-family:"IBM Plex Mono",monospace; font-size:.66rem; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--teal); margin-bottom:9px}
+.tags{display:flex; flex-wrap:wrap; gap:6px}
+.tag{font-size:.76rem; letter-spacing:.01em; border:1px solid var(--rule);
+  padding:4px 9px; border-radius:2px; background:var(--card); color:var(--ink-2)}
+
+/* ---------- contact ---------- */
+.contact a{display:flex; justify-content:space-between; align-items:baseline; gap:14px;
+  padding:14px 0; border-bottom:1px solid color-mix(in srgb,var(--rule) 70%,transparent);
+  text-decoration:none; transition:padding-left .18s ease,color .18s ease}
+.contact a:hover{padding-left:9px; color:var(--teal)}
+.contact .what{font-family:"IBM Plex Sans",sans-serif; font-weight:600; font-size:.97rem}
+.contact .val{font-family:"IBM Plex Mono",monospace; font-size:.75rem; color:var(--ink-3); text-align:right}
+footer{margin-top:52px; padding-top:18px; border-top:1px solid var(--rule);
+  font-family:"IBM Plex Mono",monospace; font-size:.66rem; letter-spacing:.11em;
+  text-transform:uppercase; color:var(--ink-3); display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap}
+
+.reveal{opacity:0; transform:translateY(15px); transition:opacity .6s ease, transform .6s ease}
+.reveal.in{opacity:1; transform:none}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important; transition:none!important}
+  .reveal{opacity:1; transform:none} html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="spine" aria-hidden="true">
+  <div class="sleepers"></div><div class="track"></div><div class="car" id="car"></div>
+</div>
+
+<header class="bar">
+  <div class="bar-in">
+    <span class="sig">M. Altuner</span>
+    <div class="bar-right">
+      <nav class="navlinks">
+        <a href="#work" data-tr="İşler" data-en="Work">İşler</a>
+        <a href="#route" data-tr="Güzergâh" data-en="Route">Güzergâh</a>
+        <a href="#contact" data-tr="İletişim" data-en="Contact">İletişim</a>
+      </nav>
+      <div class="lang" role="group" aria-label="Language">
+        <button id="btn-tr" aria-pressed="true">TR</button>
+        <button id="btn-en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div class="place">Ankara, Türkiye</div>
+    <h1>Metehan<br>Altuner</h1>
+    <div class="role" data-tr="DevOps Ekip Lideri · Platform &amp; Backend Mühendisi"
+         data-en="DevOps Team Lead · Platform &amp; Backend Engineer"></div>
+    <p class="lead"
+       data-tr="Tren trafiğini yöneten kurumsal sistemlerin arkasındaki servisleri geliştiriyor, yayına alıyor ve ayakta tutuyorum. Yazdığım kodun üretimde nasıl davrandığını da ben sahipleniyorum."
+       data-en="I build, ship and operate the services behind the enterprise systems that keep rail traffic running — and I own how that code behaves in production."></p>
+
+    <div class="scaleline"
+      data-tr="<b>9</b> node OpenShift cluster<span class='d'>·</span><b>150+</b> uygulama<span class='d'>·</span><b>~1.000</b> pod<span class='d'>·</span><b>50+</b> CI/CD pipeline<span class='d'>·</span><b>15.000+</b> kullanıcı<span class='d'>·</span><b>7</b> veritabanı CDC"
+      data-en="<b>9</b>-node OpenShift cluster<span class='d'>·</span><b>150+</b> applications<span class='d'>·</span><b>~1,000</b> pods<span class='d'>·</span><b>50+</b> CI/CD pipelines<span class='d'>·</span><b>15,000+</b> users<span class='d'>·</span><b>7</b> databases via CDC"></div>
+
+    <div class="actions">
+      <a class="btn primary" href="#work" data-tr="İşlere bak" data-en="See the work"></a>
+      <a class="btn" id="cvlink" href="cv-tr.pdf" data-tr="CV indir (PDF)" data-en="Download CV (PDF)"></a>
+      <button class="btn" id="copymail" data-tr="E-postayı kopyala" data-en="Copy email"></button>
+    </div>
+
+    <div class="status"><span class="lamp"></span>
+      <span data-tr="Doğru rol için görüşmeye açığım" data-en="Open to the right conversation"></span></div>
+  </section>
+
+  <section id="about" class="reveal">
+    <div class="eyebrow"><span>01 — <span data-tr="Hakkımda" data-en="About"></span></span></div>
+    <h2 data-tr="Yazdığım servisi kendim yayına alırım." data-en="I ship the services I write."></h2>
+    <p data-tr="Bilgisayar mühendisliği mezuniyetinin hemen ardından TCDD'de stajyer olarak başladım ve kurumsal ölçekli mikroservis sistemlerinin içine düştüm. Dört yıla yakın süredir aynı yerdeyim; bu sürede backend geliştiriciliğinden DevOps ekip liderliğine geçtim."
+       data-en="I started at TCDD as an intern right after my computer engineering degree and landed straight inside enterprise-scale microservice systems. I have been here for close to four years, moving from backend developer to leading DevOps."></p>
+    <p data-tr="Bugün 9 node'luk bir Red Hat OpenShift cluster'ının tek sorumlusuyum. Üzerindeki 150'den fazla uygulama, Kafka, Keycloak, 3scale ve GeoServer kurulumları benim elimden geçti — bir kısmını fiziksel sunucuların kablolamasından itibaren kurduk."
+       data-en="Today I am the sole owner of a 9-node Red Hat OpenShift cluster. The 150+ applications on it, along with the Kafka, Keycloak, 3scale and GeoServer installations, all came through my hands — some of it starting from cabling the physical servers."></p>
+    <p data-tr="İkisini birlikte yapmayı seviyorum. Bir servisin Spring Boot tarafındaki güvenlik katmanını yazan kişi ile onu OpenShift'te ayağa kaldıran, gateway'de politikasını tanımlayan ve gece yarısı logdan kök nedeni bulan kişi aynı olduğunda sistem daha sağlam çıkıyor."
+       data-en="I like doing both. A system holds up better when the person writing the security layer in Spring Boot is also the one deploying it on OpenShift, defining its gateway policy, and reading the logs at midnight to find the root cause."></p>
+  </section>
+
+  <section id="what" class="reveal">
+    <div class="eyebrow"><span>02 — <span data-tr="Ne yapıyorum" data-en="What I do"></span></span></div>
+    <div class="caps">
+      <div class="cap"><span class="n">01</span><div>
+        <h3 data-tr="Platform ve yayına alma" data-en="Platform &amp; delivery"></h3>
+        <p data-tr="OpenShift ve Kubernetes üzerinde container yayınlama, kaynak ve ortam yönetimi, 50+ GitLab CI pipeline. Manuel adım yok: merge sonrası ortalama 15 dakikada canlıya çıkıyoruz."
+           data-en="Container deployments on OpenShift and Kubernetes, resource and environment management, 50+ GitLab CI pipelines. No manual steps: production within 15 minutes of a merge, on average."></p></div></div>
+      <div class="cap"><span class="n">02</span><div>
+        <h3 data-tr="API güvenliği ve gateway" data-en="API security &amp; gateway"></h3>
+        <p data-tr="Keycloak realm/rol/grup mimarisi, 3scale policy ve mapping rule tasarımı, OAuth2 ve JWT akışları. Yetkilendirme kodda değil, gateway'de."
+           data-en="Keycloak realm, role and group design, 3scale policies and mapping rules, OAuth2 and JWT flows. Authorisation lives in the gateway, not in the code."></p></div></div>
+      <div class="cap"><span class="n">03</span><div>
+        <h3 data-tr="Dağıtık sistemler" data-en="Distributed systems"></h3>
+        <p data-tr="Java 21 ve Spring Boot ile olay güdümlü servisler; Kafka ve Debezium üzerine kurulu, idempotency ve hata izolasyonu içeren veri akışları."
+           data-en="Event-driven services in Java 21 and Spring Boot; data flows built on Kafka and Debezium with idempotency and failure isolation."></p></div></div>
+      <div class="cap"><span class="n">04</span><div>
+        <h3 data-tr="Gözlemlenebilirlik ve müdahale" data-en="Observability &amp; response"></h3>
+        <p data-tr="Loki ile toplanan logların Elasticsearch üzerinde analizi, yapılandırılmış loglama, hata sınıflandırma ve üretim olaylarında kök neden analizi."
+           data-en="Logs collected via Loki and analysed in Elasticsearch, structured logging, error classification and root cause analysis during production incidents."></p></div></div>
+    </div>
+  </section>
+
+  <section id="work" class="reveal">
+    <div class="eyebrow"><span>03 — <span data-tr="Öne çıkan işler" data-en="Selected work"></span></span></div>
+
+    <article class="proj">
+      <h3 data-tr="Dağıtık Mali Fiş (ÖKC / POS) Entegrasyon Sistemi" data-en="Distributed Fiscal Receipt (POS) Integration System"></h3>
+      <div class="stack">Java 21 · Spring Boot 3.5 · .NET 8 · Apache Kafka (mTLS) · OpenShift · MSSQL</div>
+      <div class="pblock"><span class="lbl" data-tr="Problem" data-en="Problem"></span>
+        <p data-tr="Kurumsal yemekhane satış sisteminin her satışta mali yazıcıdan yasal fiş basması gerekiyor. İki kural taviz kabul etmiyor: hiçbir satış basılmadan kaybolmamalı, hiçbir satış iki kez basılmamalı. Mükerrer fiş, mali kasada fazla nakit girişi demek — yani doğrudan yasal sorun. Vendor SDK'sı kapalı kaynak, thread-safe değil ve global static state kullanıyordu; üstelik Kafka'nın <b>at-least-once</b> semantiği mali fişin <b>exactly-once</b> gereksinimiyle taban tabana zıttı."
+           data-en="The enterprise cafeteria sales system must print a legal receipt on a certified fiscal printer for every sale. Two rules allow no compromise: no sale may be lost unprinted, and no sale may be printed twice. A duplicate receipt means excess cash recorded in the fiscal register — a direct legal problem. The vendor SDK was closed-source, not thread-safe and relied on global static state; on top of that, Kafka's <b>at-least-once</b> semantics stood in direct opposition to the <b>exactly-once</b> requirement of a fiscal receipt."></p></div>
+      <div class="pblock"><span class="lbl" data-tr="Çözüm" data-en="Solution"></span>
+        <p data-tr="Java ve .NET servislerinden oluşan polyglot, olay güdümlü bir mimari tasarladım. Çoklu cihaz sorununu deployment katmanına taşıdım: her POS cihazı için ayrı bir pod, dolayısıyla ayrı bir static state. Satış kimliği backend'den Kafka'ya, oradan yazıcı servisine kadar taşınarak uçtan uca idempotency sağlandı. Başarısızlık durumunda cihazın <b>hiçbir şey basmadığından emin olup olmadığımızı</b> söyleyen bir sinyal ürettim; güvenli hatalar sonsuz retry'a, belirsiz hatalar DLQ'ya gidiyor."
+           data-en="I designed a polyglot, event-driven architecture across Java and .NET services. The multi-device problem moved down to the deployment layer: one pod per POS device, therefore one static state per device. The sale identifier travels from the backend through Kafka to the printer service, giving end-to-end idempotency. On failure, I emit a signal telling us <b>whether the device printed anything at all</b>; safe failures go to infinite retry, ambiguous ones to a DLQ."></p></div>
+      <div class="pblock"><span class="lbl" data-tr="Sonuç" data-en="Outcome"></span>
+        <p data-tr="Üretimde mükerrer mali işlem yaşanmıyor. Gerçek bir ağ kesintisinde bir cihaza erişim tamamen koptu; biriken satışlar partition'da sırada bekledi ve erişim döndüğünde tamamı kayıpsız, mükerrersiz ve doğru sırayla basıldı. Sistem hâlâ üretimde çalışıyor."
+           data-en="No duplicate fiscal transactions occur in production. During a real network outage one device became completely unreachable; the accumulated sales queued on the partition and, once connectivity returned, every one of them printed with no loss, no duplication and in the correct order. The system is still running in production."></p></div>
+      <div class="expander" data-open="false">
+        <button type="button"><span class="chev">›</span><span data-tr="Teknik detay" data-en="Technical detail"></span></button>
+        <div class="deep">
+          <ul>
+            <li data-tr="<b>Cihaz başına pod izolasyonu.</b> SDK'da soket, serverInfo ve fiscalId gibi alanlar static olduğu için tek process'te ikinci cihaza bağlanmak birincinin state'ini eziyordu. DLL kapalı kaynak, değiştirilemez. Çözüm kod değil, topoloji oldu."
+                data-en="<b>Pod-per-device isolation.</b> Fields such as the socket, serverInfo and fiscalId were static in the SDK, so connecting a second device within one process overwrote the first one's state. The DLL is closed-source and cannot be changed, so the fix was topological rather than code-level."></li>
+            <li data-tr="<b>Eşzamanlılık kilidi.</b> İki thread aynı soket üzerinden yazınca byte stream'leri iç içe geçip soketi kalıcı olarak bozuyordu. Process genelinde tek izinli bir semafor ile tüm SDK çağrıları sıraya alındı."
+                data-en="<b>Concurrency gate.</b> Two threads writing over the same socket interleaved their byte streams and corrupted it permanently. A process-wide single-permit semaphore serialises every SDK call."></li>
+            <li data-tr="<b>Consumer izolasyonu.</b> Bir cihazın uzun süren hatası tek consumer thread'ini doldurup poll interval'ı aşınca rebalance tetikleniyor, commit edilmemiş batch yeniden teslim ediliyordu. Cihaz sayısına göre dinamik concurrency ve round-robin partition ataması ile her cihaz kendi thread'ine alındı."
+                data-en="<b>Consumer isolation.</b> A long-running failure on one device saturated the single consumer thread, exceeded the poll interval and triggered a rebalance, redelivering an uncommitted batch. Dynamic concurrency sized to the device count, plus round-robin partition assignment, gives every device its own thread."></li>
+            <li data-tr="<b>Yarım baskı problemi.</b> Kağıt, fiş basılırken biterse cihaz o fişi kesilmiş sayıyor; tekrar göndermek mükerrer olur. Servis, belge hiç açılmadıysa güvenli, açıldıysa güvensiz sinyali dönüyor. İlke net: mükerrer basmaktansa tek fiş feda etmek daha iyi."
+                data-en="<b>The half-print problem.</b> If the paper runs out mid-print, the device still counts that receipt as issued, so resending it would duplicate. The service reports safe if the document was never opened and unsafe if it was. The principle is explicit: sacrificing one receipt beats printing a duplicate."></li>
+            <li data-tr="<b>Durable retry.</b> Güvenli başarısızlıkta offset commit edilmiyor; 30 saniyelik sabit backoff ile mesaj yeniden teslim ediliyor. Kafka partition'ı böylece cihaz başına kalıcı ve sıralı bir kuyruğa dönüşüyor. Aralık poll interval'dan küçük olduğu için fence oluşmuyor."
+                data-en="<b>Durable retry.</b> On a safe failure the offset stays uncommitted and the message is redelivered on a fixed 30-second backoff, turning the Kafka partition into a durable, ordered per-device queue. The interval stays below the poll interval, so no fencing occurs."></li>
+            <li data-tr="<b>İş farkında cutoff.</b> Öğle servisi bitince personel cihazdan manuel nakit fişi ve Z raporu alıyor. Sonsuz retry buna karışırsa gün toplamı bozulur. Cihaz bazlı günlük kesim saati tanımlandı; kritik kural, cutoff'un manuel kesim saatinden önce olması. Pod UTC çalıştığı için timezone açıkça belirtiliyor."
+                data-en="<b>Business-aware cutoff.</b> After lunch service, staff take a manual cash receipt and Z report from the device. Infinite retry interfering with that would corrupt the daily total, so a per-device daily cutoff time was introduced — the critical rule being that the cutoff precedes the manual close. Since pods run in UTC, the timezone is declared explicitly."></li>
+            <li data-tr="<b>Ölü soket tespiti.</b> Pod açılışta bağlanıp boşta kalınca TCP sessizce ölüyor ve ilk yazma, işletim sisteminin yeniden gönderim döngüsünde yaklaşık 5 dakika bloke oluyordu. TCP keepalive, yazma zaman aşımı, soket yoklamasıyla ön tespit ve açık connect timeout eklendi."
+                data-en="<b>Dead socket detection.</b> A pod that connects at startup and then idles lets TCP die silently, and the first write blocked for roughly five minutes inside OS retransmission. TCP keepalive, a send timeout, socket polling for stale connections and an explicit connect timeout were added."></li>
+            <li data-tr="<b>Kaynak tüketimi.</b> Limitsiz pod'larda JVM node RAM'inin dörtte birini, .NET ise Server GC ile GB'larca bellek tutuyordu. Workstation GC, Kubernetes limitleri ve JVM MaxRAMPercentage ile tüketim ~3 GB'tan 150–600 MB bandına indi."
+                data-en="<b>Resource footprint.</b> Without limits the JVM claimed a quarter of node RAM and .NET held gigabytes under Server GC. Workstation GC, Kubernetes limits and JVM MaxRAMPercentage brought consumption from around 3 GB down to a 150–600 MB range."></li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="proj">
+      <h3 data-tr="Merkezi Kimlik ve Endpoint Bazlı API Yetkilendirme Platformu" data-en="Centralised Identity and Endpoint-Level API Authorisation Platform"></h3>
+      <div class="stack">Keycloak · Red Hat 3scale · Custom Policy · OAuth2 / JWT</div>
+      <div class="pblock"><span class="lbl" data-tr="Problem" data-en="Problem"></span>
+        <p data-tr="Yetkilendirme mantığı onlarca backend servisin içine dağılmıştı. Her ekip erişim kurallarını kendi kodunda taşıyordu; bu da tutarlılığı, denetlenebilirliği ve yeni servis eklemeyi zorlaştırıyordu."
+           data-en="Authorisation logic was scattered across dozens of backend services. Each team carried its access rules in its own code, which made consistency, auditability and onboarding new services difficult."></p></div>
+      <div class="pblock"><span class="lbl" data-tr="Çözüm" data-en="Solution"></span>
+        <p data-tr="Keycloak ile 3scale'i birbirine bağlayan <b>custom bir 3scale policy</b> geliştirdim ve kimlik doğrulama ile yetkilendirmenin tamamını gateway katmanına taşıdım. Modelde her endpoint bir role karşılık geliyor; roller gruplanarak endpoint bazlı erişim politikaları oluşturuluyor."
+           data-en="I developed a <b>custom 3scale policy</b> binding Keycloak and 3scale together and moved authentication and authorisation entirely into the gateway layer. In this model each endpoint maps to a role, and roles are grouped to form endpoint-level access policies."></p></div>
+      <div class="pblock"><span class="lbl" data-tr="Sonuç" data-en="Outcome"></span>
+        <p data-tr="15.000'den fazla kullanıcı ve 27 API product, altlarındaki onlarca backend ile birlikte tek bir yetkilendirme modeli altında toplandı. Backend projelerinde artık ayrıca yetki kontrolü yazılmıyor; yeni bir servisi dahil etmek kod değişikliği değil, konfigürasyon işi."
+           data-en="More than 15,000 users and 27 API products, along with the dozens of backends beneath them, now sit under a single authorisation model. Backend projects no longer implement authorisation at all, and onboarding a new service is a configuration task rather than a code change."></p></div>
+    </article>
+
+    <article class="proj">
+      <h3 data-tr="Veritabanları Arası CDC Senkronizasyon Ara Katmanı" data-en="Cross-Database CDC Synchronisation Middleware"></h3>
+      <div class="stack">Debezium · Apache Kafka · Java · Spring Boot</div>
+      <div class="pblock"><span class="lbl" data-tr="Problem" data-en="Problem"></span>
+        <p data-tr="Servisler birbirlerinin veritabanlarına doğrudan bağımlıydı. Bu bağımlılık entegrasyonları kırılgan hale getiriyor, şema değişikliklerini riskli kılıyordu."
+           data-en="Services depended directly on each other's databases. That coupling made integrations brittle and schema changes risky."></p></div>
+      <div class="pblock"><span class="lbl" data-tr="Çözüm" data-en="Solution"></span>
+        <p data-tr="7 veritabanını Debezium ile dinleyen CDC akışını kurdum ve gelen değişiklik olaylarını orkestre eden Java ara katmanını baştan sona tek başıma geliştirdim. Katman, abone olan hedef veritabanı ve tablolara ekleme, güncelleme ve silme işlemlerini yönlendiriyor."
+           data-en="I set up CDC streams capturing 7 databases via Debezium and single-handedly built the Java middleware that orchestrates the resulting change events, routing inserts, updates and deletes to subscribing databases and tables."></p></div>
+      <div class="pblock"><span class="lbl" data-tr="Sonuç" data-en="Outcome"></span>
+        <p data-tr="Servisler arası doğrudan veritabanı bağımlılığı ortadan kalktı. Senkronizasyon merkezi, izlenebilir ve olay tabanlı bir akışa taşındı."
+           data-en="Direct cross-service database coupling disappeared, and synchronisation moved onto a centralised, traceable, event-driven flow."></p></div>
+    </article>
+  </section>
+
+  <section id="route" class="reveal">
+    <div class="eyebrow"><span>04 — <span data-tr="Güzergâh" data-en="Route"></span></span></div>
+    <div class="stations">
+      <div class="stop now">
+        <div class="when" data-tr="Ocak 2025 — Devam" data-en="Jan 2025 — Present"></div>
+        <h3 data-tr="DevOps Ekip Lideri" data-en="DevOps Team Lead"></h3>
+        <div class="where">TCDD Teknik Mühendislik ve Müşavirlik A.Ş.</div>
+        <ul>
+          <li data-tr="3 master, 3 fiziksel worker ve 3 infra node'dan oluşan OpenShift cluster'ının tek sorumlusu; 150+ uygulama, ~1.000 pod."
+              data-en="Sole owner of an OpenShift cluster of 3 master, 3 bare-metal worker and 3 infra nodes, running 150+ applications across ~1,000 pods."></li>
+          <li data-tr="Fiziksel worker sunucuların donanım kurulumu ve ağ bağlantıları, network ekibiyle birlikte."
+              data-en="Hardware installation and network connectivity of the bare-metal workers, together with the network team."></li>
+          <li data-tr="Kafka, Keycloak, 3scale ve cluster yapılandırmalı GeoServer kurulumları sıfırdan."
+              data-en="Kafka, Keycloak, 3scale and a clustered GeoServer, all installed from scratch."></li>
+          <li data-tr="50+ GitLab CI pipeline; manuel adım yok, merge sonrası ortalama 15 dakikada canlı."
+              data-en="50+ GitLab CI pipelines with no manual steps; production within 15 minutes of a merge, on average."></li>
+          <li data-tr="3 kişilik ekibe teknik liderlik; kod inceleme ve backend–platform koordinasyonu."
+              data-en="Technical leadership for a team of three, covering code review and backend–platform coordination."></li>
+        </ul>
+      </div>
+      <div class="stop">
+        <div class="when" data-tr="Kasım 2022 — Aralık 2024" data-en="Nov 2022 — Dec 2024"></div>
+        <h3>Backend Developer / DevOps Engineer</h3>
+        <div class="where">TCDD Teknik Mühendislik ve Müşavirlik A.Ş.</div>
+        <ul>
+          <li data-tr="Java ve Spring Boot ile birden fazla kurumsal mikroservis; REST entegrasyonları, servis güvenliği, veri erişim katmanları."
+              data-en="Multiple enterprise microservices in Java and Spring Boot, covering REST integrations, service security and data access layers."></li>
+          <li data-tr="Tren trafik operasyonlarını destekleyen sistemlerde API güvenliği ve OpenShift deployment sorumluluğu."
+              data-en="Ownership of API security and OpenShift deployment for systems supporting railway traffic operations."></li>
+        </ul>
+      </div>
+      <div class="stop">
+        <div class="when" data-tr="Temmuz 2022 — Kasım 2022" data-en="Jul 2022 — Nov 2022"></div>
+        <h3 data-tr="Yazılım Geliştirme Stajyeri" data-en="Software Development Intern"></h3>
+        <div class="where">TCDD Genel Müdürlüğü</div>
+      </div>
+      <div class="stop">
+        <div class="when">2022</div>
+        <h3 data-tr="Bilgisayar Mühendisliği, Lisans" data-en="B.Sc. Computer Engineering"></h3>
+        <div class="where" data-tr="Kütahya Dumlupınar Üniversitesi" data-en="Kütahya Dumlupınar University"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="toolkit" class="reveal">
+    <div class="eyebrow"><span>05 — <span data-tr="Yetkinlikler" data-en="Toolkit"></span></span></div>
+    <div class="grp"><div class="k">Backend</div><div class="tags">
+      <span class="tag">Java 21</span><span class="tag">Spring Boot 3.x</span><span class="tag">Spring Security</span>
+      <span class="tag">Spring Kafka</span><span class="tag">REST API</span><span class="tag">JPA / Hibernate</span>
+      <span class="tag">.NET 8 / C#</span><span class="tag">ASP.NET Core</span></div></div>
+    <div class="grp"><div class="k" data-tr="Platform &amp; Altyapı" data-en="Platform &amp; Infrastructure"></div><div class="tags">
+      <span class="tag">Red Hat OpenShift</span><span class="tag">Kubernetes</span><span class="tag">Docker</span>
+      <span class="tag">Linux</span><span class="tag" data-tr="Fiziksel sunucu kurulumu" data-en="Bare-metal setup"></span>
+      <span class="tag">GitLab CI</span><span class="tag">Git</span></div></div>
+    <div class="grp"><div class="k" data-tr="Veri &amp; Mesajlaşma" data-en="Data &amp; Messaging"></div><div class="tags">
+      <span class="tag">Apache Kafka</span><span class="tag">mTLS</span><span class="tag">Debezium / CDC</span>
+      <span class="tag">PostgreSQL</span><span class="tag">MSSQL</span><span class="tag">Redis</span></div></div>
+    <div class="grp"><div class="k" data-tr="Kimlik &amp; API Yönetimi" data-en="Identity &amp; API Management"></div><div class="tags">
+      <span class="tag">Keycloak</span><span class="tag">Red Hat 3scale</span><span class="tag">OAuth2</span>
+      <span class="tag">JWT</span><span class="tag">API Gateway</span></div></div>
+    <div class="grp"><div class="k" data-tr="Gözlemlenebilirlik" data-en="Observability"></div><div class="tags">
+      <span class="tag">Elasticsearch</span><span class="tag">Loki</span>
+      <span class="tag" data-tr="Yapılandırılmış loglama" data-en="Structured logging"></span>
+      <span class="tag" data-tr="Kök neden analizi" data-en="Root cause analysis"></span></div></div>
+    <div class="grp"><div class="k" data-tr="Mimari" data-en="Architecture"></div><div class="tags">
+      <span class="tag" data-tr="Mikroservis" data-en="Microservices"></span>
+      <span class="tag">Event-driven</span><span class="tag">Idempotency</span>
+      <span class="tag">Exactly-once</span><span class="tag">Dead-letter queue</span>
+      <span class="tag">Bulkhead</span><span class="tag">JVM &amp; GC tuning</span></div></div>
+    <p style="margin-top:18px;font-size:.95rem;color:var(--ink-3)"
+       data-tr="Türkçe ana dilim. İngilizceyi teknik dokümantasyon ve geliştirme süreçlerinde etkin kullanıyorum."
+       data-en="Turkish is my native language. I work comfortably in English across technical documentation and development."></p>
+  </section>
+
+  <section id="contact" class="reveal">
+    <div class="eyebrow"><span>06 — <span data-tr="İletişim" data-en="Contact"></span></span></div>
+    <h2 data-tr="Bir sonraki durak neresi olur, konuşalım." data-en="Let's talk about the next stop."></h2>
+    <div class="contact">
+      <a href="mailto:metehan.altuner@gmail.com"><span class="what" data-tr="E-posta" data-en="Email"></span><span class="val">metehan.altuner@gmail.com</span></a>
+      <a href="https://www.linkedin.com/in/metehan-altuner-bb34b8286" target="_blank" rel="noopener"><span class="what">LinkedIn</span><span class="val">/in/metehan-altuner</span></a>
+      <a href="https://github.com/MetehanAltuner" target="_blank" rel="noopener"><span class="what">GitHub</span><span class="val">@MetehanAltuner</span></a>
+      <a id="cvlink2" href="cv-tr.pdf"><span class="what">CV (PDF)</span><span class="val" data-tr="indir" data-en="download"></span></a>
+    </div>
+    <footer>
+      <span>Ankara, Türkiye</span>
+      <span>© 2026 Metehan Altuner</span>
+    </footer>
+  </section>
+
+</main>
+
+<script>
+(function(){
+  var lang='tr';
+  var btnTr=document.getElementById('btn-tr'), btnEn=document.getElementById('btn-en');
+
+  function apply(l){
+    lang=l;
+    document.documentElement.lang=l;
+    document.title = (l==='tr')
+      ? 'Metehan Altuner — Platform ve Backend'
+      : 'Metehan Altuner — Platform & Backend';
+    document.querySelectorAll('[data-tr],[data-en]').forEach(function(el){
+      var v=el.getAttribute('data-'+l);
+      if(v!==null) el.innerHTML=v;
+    });
+    var f = (l==='tr') ? 'cv-tr.pdf' : 'cv-en.pdf';
+    var a=document.getElementById('cvlink'), b=document.getElementById('cvlink2');
+    if(a) a.href=f;
+    if(b) b.href=f;
+    btnTr.setAttribute('aria-pressed', l==='tr');
+    btnEn.setAttribute('aria-pressed', l==='en');
+  }
+  btnTr.addEventListener('click',function(){apply('tr');});
+  btnEn.addEventListener('click',function(){apply('en');});
+  apply('tr');
+
+  var cm=document.getElementById('copymail');
+  cm.addEventListener('click',function(){
+    var mail='metehan.altuner@gmail.com';
+    var done=(lang==='tr')?'Kopyalandı ✓':'Copied ✓';
+    function back(){ cm.innerHTML=cm.getAttribute('data-'+lang); }
+    function flash(){ cm.textContent=done; setTimeout(back,1600); }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(mail).then(flash,function(){ location.href='mailto:'+mail; });
+    } else { location.href='mailto:'+mail; }
+  });
+
+  document.querySelectorAll('.expander').forEach(function(ex){
+    ex.querySelector('button').addEventListener('click',function(){
+      ex.setAttribute('data-open', ex.getAttribute('data-open')==='true'?'false':'true');
+    });
+  });
+
+  var car=document.getElementById('car');
+  function move(){
+    var h=document.documentElement;
+    var max=h.scrollHeight-h.clientHeight;
+    var p=(max>0)?h.scrollTop/max:0;
+    car.style.top=(p*(h.clientHeight-26)+8)+'px';
+  }
+  window.addEventListener('scroll',move,{passive:true});
+  window.addEventListener('resize',move);
+  move();
+
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    },{threshold:0.06, rootMargin:'0px 0px -50px 0px'});
+    document.querySelectorAll('.reveal').forEach(function(s){ io.observe(s); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(s){ s.classList.add('in'); });
+  }
+})();
+</script>
+</body>
+</html>
