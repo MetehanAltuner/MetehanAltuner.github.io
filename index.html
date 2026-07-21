@@ -21,8 +21,10 @@
   --teal-2:#0A3B3F;
   --amber:#B0740E;
   --clear:#2E6B47;
-  --rail:70px;
-  --maxw:740px;
+  --maxw:1200px;      /* full page frame */
+  --side:38%;         /* sidebar width on desktop */
+  --headh:47px;       /* sticky header height */
+  --read:66ch;        /* comfortable reading measure */
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -36,32 +38,22 @@ body::before{
   background-image:radial-gradient(var(--ink-3) .5px, transparent .5px);
   background-size:4px 4px;
 }
-.wrap{position:relative; z-index:1; max-width:var(--maxw); margin:0 auto; padding:0 22px 110px}
 h1,h2,h3,h4{font-family:"IBM Plex Sans",Helvetica,Arial,sans-serif}
 .mono,.eyebrow,.tag,.stack,.when,.lbl{font-family:"IBM Plex Mono",ui-monospace,monospace}
 a{color:inherit}
-p{margin:0 0 16px; max-width:64ch}
+p{margin:0 0 16px; max-width:var(--read)}
 :focus-visible{outline:2px solid var(--amber); outline-offset:3px; border-radius:2px}
 
-/* ---------- spine ---------- */
-.spine{position:fixed; left:0; top:0; bottom:0; width:var(--rail); z-index:2; display:none}
-.spine .track{position:absolute; left:34px; top:0; bottom:0; width:1px; background:var(--rule)}
-.spine .sleepers{position:absolute; left:27px; top:0; bottom:0; width:15px; opacity:.30;
-  background-image:linear-gradient(to bottom,var(--ink-3) 1px,transparent 1px); background-size:100% 22px}
-.spine .car{position:absolute; left:29px; width:11px; height:11px; border-radius:50%;
-  background:var(--paper); border:1.5px solid var(--ink); top:0; transition:top .1s linear}
-.spine .car::after{content:""; position:absolute; inset:2.5px; border-radius:50%; background:var(--amber)}
-@media (min-width:1000px){ .spine{display:block} .wrap,.bar-in{margin-left:calc(var(--rail) + 40px)} }
-
-/* ---------- bar ---------- */
-header.bar{position:sticky; top:0; z-index:6;
-  background:color-mix(in srgb,var(--paper) 88%,transparent);
+/* ---------- top bar ---------- */
+header.bar{position:sticky; top:0; z-index:20; height:var(--headh);
+  background:color-mix(in srgb,var(--paper) 90%,transparent);
   backdrop-filter:blur(8px); border-bottom:1px solid color-mix(in srgb,var(--rule) 70%,transparent)}
-.bar-in{max-width:var(--maxw); margin:0 auto; padding:10px 22px; display:flex; align-items:center; justify-content:space-between; gap:14px}
+.bar-in{max-width:var(--maxw); height:100%; margin:0 auto; padding:0 22px;
+  display:flex; align-items:center; justify-content:space-between; gap:14px}
 .sig{font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-2)}
-.bar-right{display:flex; align-items:center; gap:12px}
-.navlinks{display:none; gap:16px}
-@media(min-width:680px){ .navlinks{display:flex} }
+.bar-right{display:flex; align-items:center; gap:14px}
+.navlinks{display:none; gap:18px}
+@media(min-width:720px){ .navlinks{display:flex} }
 .navlinks a{font-family:"IBM Plex Mono",monospace; font-size:.7rem; letter-spacing:.1em;
   text-transform:uppercase; color:var(--ink-3); text-decoration:none; transition:color .15s}
 .navlinks a:hover{color:var(--teal)}
@@ -70,43 +62,79 @@ header.bar{position:sticky; top:0; z-index:6;
   background:none; border:0; padding:5px 9px; cursor:pointer; color:var(--ink-3)}
 .lang button[aria-pressed="true"]{background:var(--ink); color:var(--paper)}
 
-/* ---------- hero ---------- */
-.hero{padding:82px 0 60px}
+/* ---------- layout shell ---------- */
+.shell{position:relative; z-index:1; max-width:var(--maxw); margin:0 auto}
+@media(min-width:1000px){
+  .shell{display:grid; grid-template-columns:var(--side) 1fr; align-items:start}
+}
+
+/* ---------- sidebar (identity) ---------- */
+.side{padding:44px 22px 8px}
 .place{font-family:"IBM Plex Mono",monospace; font-size:.7rem; letter-spacing:.24em;
-  text-transform:uppercase; color:var(--ink-3); margin-bottom:20px}
-h1{font-size:clamp(2.5rem,8.5vw,4.2rem); line-height:.98;
+  text-transform:uppercase; color:var(--ink-3); margin-bottom:18px}
+h1{font-size:clamp(2.4rem,7vw,3.4rem); line-height:1.0;
   font-weight:700; letter-spacing:-.035em; margin:0}
-.role{font-size:clamp(1rem,3.2vw,1.15rem); font-weight:500; color:var(--teal);
-  letter-spacing:-.005em; margin:16px 0 0; font-family:"IBM Plex Sans",sans-serif}
-.lead{font-size:1.1rem; color:var(--ink-2); margin-top:16px}
-.scaleline{margin-top:26px; padding:11px 0; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);
-  font-family:"IBM Plex Mono",monospace; font-size:.73rem; letter-spacing:.03em; color:var(--ink-2); line-height:2}
+.role{font-size:clamp(1rem,3vw,1.12rem); font-weight:500; color:var(--teal);
+  letter-spacing:-.005em; margin:15px 0 0; font-family:"IBM Plex Sans",sans-serif}
+.lead{font-size:1.06rem; color:var(--ink-2); margin-top:15px; max-width:42ch}
+.scaleline{margin-top:22px; padding:11px 0; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);
+  font-family:"IBM Plex Mono",monospace; font-size:.71rem; letter-spacing:.02em; color:var(--ink-2); line-height:2}
 .scaleline b{color:var(--ink); font-weight:500}
 .scaleline .d{color:var(--rule); padding:0 6px}
-.actions{display:flex; flex-wrap:wrap; gap:9px; margin-top:24px}
+.actions{display:flex; flex-wrap:wrap; gap:9px; margin-top:22px}
 .btn{font-family:"IBM Plex Sans",sans-serif; font-size:.82rem; font-weight:500; letter-spacing:.01em;
   border:1px solid var(--ink); background:none; color:var(--ink); padding:8px 15px; border-radius:2px;
   cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:7px; transition:.16s}
 .btn:hover{background:var(--ink); color:var(--paper)}
 .btn.primary{background:var(--teal); border-color:var(--teal); color:#F1EFE8}
 .btn.primary:hover{background:var(--teal-2); border-color:var(--teal-2)}
-.status{display:flex; align-items:center; gap:9px; margin-top:22px;
+.status{display:flex; align-items:center; gap:9px; margin-top:20px;
   font-family:"IBM Plex Mono",monospace; font-size:.71rem; letter-spacing:.09em;
   text-transform:uppercase; color:var(--ink-2)}
 .lamp{width:8px; height:8px; border-radius:50%; background:var(--clear); flex:none;
   box-shadow:0 0 0 0 color-mix(in srgb,var(--clear) 55%,transparent); animation:pulse 3s ease-out infinite}
 @keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--clear) 50%,transparent)}
   70%{box-shadow:0 0 0 8px transparent}100%{box-shadow:0 0 0 0 transparent}}
+.side-links{display:none; margin-top:26px; padding-top:18px; border-top:1px solid var(--rule)}
+.side-links a{display:flex; justify-content:space-between; align-items:baseline; gap:12px;
+  padding:7px 0; text-decoration:none; transition:padding-left .18s ease,color .18s ease}
+.side-links a:hover{padding-left:6px; color:var(--teal)}
+.side-links .what{font-family:"IBM Plex Sans",sans-serif; font-weight:600; font-size:.86rem}
+.side-links .val{font-family:"IBM Plex Mono",monospace; font-size:.7rem; color:var(--ink-3)}
 
-/* ---------- sections ---------- */
-section{padding:52px 0; scroll-margin-top:64px}
+@media(min-width:1000px){
+  .side{position:sticky; top:var(--headh); height:calc(100vh - var(--headh));
+    padding:52px 46px 32px; border-right:1px solid var(--rule);
+    display:flex; flex-direction:column; overflow-y:auto; overscroll-behavior:contain}
+  .side-links{display:block; margin-top:auto}   /* pinned to sidebar bottom */
+  .lead,.scaleline{max-width:none}
+}
+
+/* thin rail + moving car on the sidebar edge (desktop only) */
+.car{display:none}
+@media(min-width:1000px){
+  .car{display:block; position:fixed; top:var(--headh);
+    width:11px; height:11px; border-radius:50%;
+    background:var(--paper); border:1.5px solid var(--ink); transition:top .1s linear; z-index:5}
+  .car::after{content:""; position:absolute; inset:2.5px; border-radius:50%; background:var(--amber)}
+}
+
+/* ---------- content column ---------- */
+.content{padding:8px 22px 96px}
+@media(min-width:1000px){ .content{padding:20px 52px 120px} }
+section{padding:44px 0; scroll-margin-top:calc(var(--headh) + 10px)}
+section:first-child{padding-top:20px}
 .eyebrow{font-size:.68rem; letter-spacing:.22em; text-transform:uppercase; color:var(--ink-3);
   display:flex; align-items:center; gap:11px; margin-bottom:24px}
 .eyebrow::after{content:""; flex:1; height:1px; background:var(--rule)}
-h2{font-size:clamp(1.35rem,4.4vw,1.6rem); font-weight:600; letter-spacing:-.018em; margin:0 0 16px; line-height:1.25}
+h2{font-size:clamp(1.35rem,3.4vw,1.65rem); font-weight:600; letter-spacing:-.018em; margin:0 0 16px; line-height:1.25}
 
 /* ---------- capabilities ---------- */
 .caps{border-top:1px solid var(--rule)}
+@media(min-width:640px){
+  .caps{display:grid; grid-template-columns:1fr 1fr; column-gap:34px; border-top:0}
+  .caps .cap{border-top:1px solid var(--rule)}
+}
 .cap{padding:20px 0; border-bottom:1px solid color-mix(in srgb,var(--rule) 65%,transparent);
   display:grid; grid-template-columns:30px 1fr; gap:14px; align-items:start}
 .cap .n{font-family:"IBM Plex Mono",monospace; font-size:.7rem; color:var(--amber); padding-top:5px}
@@ -116,12 +144,13 @@ h2{font-size:clamp(1.35rem,4.4vw,1.6rem); font-weight:600; letter-spacing:-.018e
 /* ---------- projects ---------- */
 .proj{background:var(--card); border:1px solid var(--rule); border-left:3px solid var(--teal);
   padding:24px 22px; margin-bottom:18px}
-.proj h3{font-size:clamp(1.08rem,3.6vw,1.22rem); font-weight:600; margin:0 0 7px; letter-spacing:-.012em; line-height:1.3}
+@media(min-width:1000px){ .proj{padding:28px 30px} }
+.proj h3{font-size:clamp(1.08rem,2.4vw,1.24rem); font-weight:600; margin:0 0 7px; letter-spacing:-.012em; line-height:1.3}
 .stack{font-size:.7rem; letter-spacing:.05em; color:var(--ink-3); margin-bottom:15px; line-height:1.8}
 .pblock{margin-bottom:12px}
 .lbl{display:block; font-size:.63rem; letter-spacing:.19em; text-transform:uppercase;
   color:var(--teal); margin-bottom:3px}
-.pblock p{margin:0; font-size:1rem; color:var(--ink-2)}
+.pblock p{margin:0; font-size:1rem; color:var(--ink-2); max-width:var(--read)}
 .pblock p b{color:var(--ink); font-weight:500}
 .expander{margin-top:16px; border-top:1px solid var(--rule); padding-top:13px}
 .expander button{font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.11em;
@@ -131,8 +160,8 @@ h2{font-size:clamp(1.35rem,4.4vw,1.6rem); font-weight:600; letter-spacing:-.018e
 .expander[data-open="true"] button .chev{transform:rotate(90deg)}
 .deep{display:none; margin-top:13px}
 .expander[data-open="true"] .deep{display:block}
-.deep ul{margin:0; padding-left:17px}
-.deep li{margin-bottom:8px; font-size:.95rem; color:var(--ink-2)}
+.deep ul{margin:0; padding-left:17px; columns:1}
+.deep li{margin-bottom:8px; font-size:.95rem; color:var(--ink-2); max-width:var(--read)}
 .deep li::marker{color:var(--amber)}
 .deep li b{color:var(--ink); font-weight:500}
 
@@ -148,11 +177,12 @@ h2{font-size:clamp(1.35rem,4.4vw,1.6rem); font-weight:600; letter-spacing:-.018e
 .stop h3{font-size:1.02rem; font-weight:600; margin:3px 0 1px; letter-spacing:-.008em}
 .where{font-size:.94rem; color:var(--ink-3); font-style:italic; margin-bottom:9px}
 .stop ul{margin:0; padding-left:17px}
-.stop li{margin-bottom:6px; color:var(--ink-2); font-size:.99rem}
+.stop li{margin-bottom:6px; color:var(--ink-2); font-size:.99rem; max-width:var(--read)}
 .stop li::marker{color:var(--rule)}
 
 /* ---------- toolkit ---------- */
-.grp{margin-bottom:20px}
+.grid-tk{display:grid; grid-template-columns:1fr; gap:20px}
+@media(min-width:640px){ .grid-tk{grid-template-columns:1fr 1fr; gap:22px 34px} }
 .grp .k{font-family:"IBM Plex Mono",monospace; font-size:.66rem; letter-spacing:.16em;
   text-transform:uppercase; color:var(--teal); margin-bottom:9px}
 .tags{display:flex; flex-wrap:wrap; gap:6px}
@@ -180,9 +210,7 @@ footer{margin-top:52px; padding-top:18px; border-top:1px solid var(--rule);
 </head>
 <body>
 
-<div class="spine" aria-hidden="true">
-  <div class="sleepers"></div><div class="track"></div><div class="car" id="car"></div>
-</div>
+<div class="car" id="car" aria-hidden="true"></div>
 
 <header class="bar">
   <div class="bar-in">
@@ -201,9 +229,10 @@ footer{margin-top:52px; padding-top:18px; border-top:1px solid var(--rule);
   </div>
 </header>
 
-<main class="wrap">
+<div class="shell">
 
-  <section class="hero">
+  <!-- ===================== SIDEBAR / IDENTITY ===================== -->
+  <aside class="side">
     <div class="place">Ankara, Türkiye</div>
     <h1>Metehan<br>Altuner</h1>
     <div class="role" data-tr="DevOps Ekip Lideri · Platform &amp; Backend Mühendisi"
@@ -224,7 +253,16 @@ footer{margin-top:52px; padding-top:18px; border-top:1px solid var(--rule);
 
     <div class="status"><span class="lamp"></span>
       <span data-tr="Doğru rol için görüşmeye açığım" data-en="Open to the right conversation"></span></div>
-  </section>
+
+    <div class="side-links">
+      <a href="mailto:metehan.altuner@gmail.com"><span class="what" data-tr="E-posta" data-en="Email"></span><span class="val">metehan.altuner@gmail.com</span></a>
+      <a href="https://www.linkedin.com/in/metehan-altuner-bb34b8286" target="_blank" rel="noopener"><span class="what">LinkedIn</span><span class="val">/in/metehan-altuner</span></a>
+      <a href="https://github.com/MetehanAltuner" target="_blank" rel="noopener"><span class="what">GitHub</span><span class="val">@MetehanAltuner</span></a>
+    </div>
+  </aside>
+
+  <!-- ===================== CONTENT ===================== -->
+  <main class="content">
 
   <section id="about" class="reveal">
     <div class="eyebrow"><span>01 — <span data-tr="Hakkımda" data-en="About"></span></span></div>
@@ -374,29 +412,31 @@ footer{margin-top:52px; padding-top:18px; border-top:1px solid var(--rule);
 
   <section id="toolkit" class="reveal">
     <div class="eyebrow"><span>05 — <span data-tr="Yetkinlikler" data-en="Toolkit"></span></span></div>
-    <div class="grp"><div class="k">Backend</div><div class="tags">
-      <span class="tag">Java 21</span><span class="tag">Spring Boot 3.x</span><span class="tag">Spring Security</span>
-      <span class="tag">Spring Kafka</span><span class="tag">REST API</span><span class="tag">JPA / Hibernate</span>
-      <span class="tag">.NET 8 / C#</span><span class="tag">ASP.NET Core</span></div></div>
-    <div class="grp"><div class="k" data-tr="Platform &amp; Altyapı" data-en="Platform &amp; Infrastructure"></div><div class="tags">
-      <span class="tag">Red Hat OpenShift</span><span class="tag">Kubernetes</span><span class="tag">Docker</span>
-      <span class="tag">Linux</span><span class="tag" data-tr="Fiziksel sunucu kurulumu" data-en="Bare-metal setup"></span>
-      <span class="tag">GitLab CI</span><span class="tag">Git</span></div></div>
-    <div class="grp"><div class="k" data-tr="Veri &amp; Mesajlaşma" data-en="Data &amp; Messaging"></div><div class="tags">
-      <span class="tag">Apache Kafka</span><span class="tag">mTLS</span><span class="tag">Debezium / CDC</span>
-      <span class="tag">PostgreSQL</span><span class="tag">MSSQL</span><span class="tag">Redis</span></div></div>
-    <div class="grp"><div class="k" data-tr="Kimlik &amp; API Yönetimi" data-en="Identity &amp; API Management"></div><div class="tags">
-      <span class="tag">Keycloak</span><span class="tag">Red Hat 3scale</span><span class="tag">OAuth2</span>
-      <span class="tag">JWT</span><span class="tag">API Gateway</span></div></div>
-    <div class="grp"><div class="k" data-tr="Gözlemlenebilirlik" data-en="Observability"></div><div class="tags">
-      <span class="tag">Elasticsearch</span><span class="tag">Loki</span>
-      <span class="tag" data-tr="Yapılandırılmış loglama" data-en="Structured logging"></span>
-      <span class="tag" data-tr="Kök neden analizi" data-en="Root cause analysis"></span></div></div>
-    <div class="grp"><div class="k" data-tr="Mimari" data-en="Architecture"></div><div class="tags">
-      <span class="tag" data-tr="Mikroservis" data-en="Microservices"></span>
-      <span class="tag">Event-driven</span><span class="tag">Idempotency</span>
-      <span class="tag">Exactly-once</span><span class="tag">Dead-letter queue</span>
-      <span class="tag">Bulkhead</span><span class="tag">JVM &amp; GC tuning</span></div></div>
+    <div class="grid-tk">
+      <div class="grp"><div class="k">Backend</div><div class="tags">
+        <span class="tag">Java 21</span><span class="tag">Spring Boot 3.x</span><span class="tag">Spring Security</span>
+        <span class="tag">Spring Kafka</span><span class="tag">REST API</span><span class="tag">JPA / Hibernate</span>
+        <span class="tag">.NET 8 / C#</span><span class="tag">ASP.NET Core</span></div></div>
+      <div class="grp"><div class="k" data-tr="Platform &amp; Altyapı" data-en="Platform &amp; Infrastructure"></div><div class="tags">
+        <span class="tag">Red Hat OpenShift</span><span class="tag">Kubernetes</span><span class="tag">Docker</span>
+        <span class="tag">Linux</span><span class="tag" data-tr="Fiziksel sunucu kurulumu" data-en="Bare-metal setup"></span>
+        <span class="tag">GitLab CI</span><span class="tag">Git</span></div></div>
+      <div class="grp"><div class="k" data-tr="Veri &amp; Mesajlaşma" data-en="Data &amp; Messaging"></div><div class="tags">
+        <span class="tag">Apache Kafka</span><span class="tag">mTLS</span><span class="tag">Debezium / CDC</span>
+        <span class="tag">PostgreSQL</span><span class="tag">MSSQL</span><span class="tag">Redis</span></div></div>
+      <div class="grp"><div class="k" data-tr="Kimlik &amp; API Yönetimi" data-en="Identity &amp; API Management"></div><div class="tags">
+        <span class="tag">Keycloak</span><span class="tag">Red Hat 3scale</span><span class="tag">OAuth2</span>
+        <span class="tag">JWT</span><span class="tag">API Gateway</span></div></div>
+      <div class="grp"><div class="k" data-tr="Gözlemlenebilirlik" data-en="Observability"></div><div class="tags">
+        <span class="tag">Elasticsearch</span><span class="tag">Loki</span>
+        <span class="tag" data-tr="Yapılandırılmış loglama" data-en="Structured logging"></span>
+        <span class="tag" data-tr="Kök neden analizi" data-en="Root cause analysis"></span></div></div>
+      <div class="grp"><div class="k" data-tr="Mimari" data-en="Architecture"></div><div class="tags">
+        <span class="tag" data-tr="Mikroservis" data-en="Microservices"></span>
+        <span class="tag">Event-driven</span><span class="tag">Idempotency</span>
+        <span class="tag">Exactly-once</span><span class="tag">Dead-letter queue</span>
+        <span class="tag">Bulkhead</span><span class="tag">JVM &amp; GC tuning</span></div></div>
+    </div>
     <p style="margin-top:18px;font-size:.95rem;color:var(--ink-3)"
        data-tr="Türkçe ana dilim. İngilizceyi teknik dokümantasyon ve geliştirme süreçlerinde etkin kullanıyorum."
        data-en="Turkish is my native language. I work comfortably in English across technical documentation and development."></p>
@@ -417,7 +457,8 @@ footer{margin-top:52px; padding-top:18px; border-top:1px solid var(--rule);
     </footer>
   </section>
 
-</main>
+  </main>
+</div>
 
 <script>
 (function(){
@@ -462,12 +503,21 @@ footer{margin-top:52px; padding-top:18px; border-top:1px solid var(--rule);
     });
   });
 
+  // scroll-progress car, docked on the sidebar edge (desktop only)
   var car=document.getElementById('car');
+  var shell=document.querySelector('.shell');
   function move(){
+    if(getComputedStyle(car).display==='none') return;
     var h=document.documentElement;
     var max=h.scrollHeight-h.clientHeight;
     var p=(max>0)?h.scrollTop/max:0;
-    car.style.top=(p*(h.clientHeight-26)+8)+'px';
+    var headh=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--headh'))||47;
+    var travel=h.clientHeight-headh-26;
+    car.style.top=(headh + p*travel + 8)+'px';
+    // align horizontally to the sidebar's right border
+    var r=shell.getBoundingClientRect();
+    var sideW=shell.querySelector('.side').getBoundingClientRect().width;
+    car.style.left=(r.left+sideW-6)+'px';
   }
   window.addEventListener('scroll',move,{passive:true});
   window.addEventListener('resize',move);
